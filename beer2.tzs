@@ -1,0 +1,32 @@
+storage    (map string uint32) ;
+parameter  string ;
+return     unit ;
+code       { DUP ; CAAR                 # tez : global
+             PUSH tez "5.00"
+             COMPARE ; GT               # 5.00 > tez : global
+             IF { FAIL } {}             # global
+             DUP ; CADR                 # string : global
+             DIP { DUP ; CDR }          # string : map : global
+             GET                        # option uint32 : global
+             IF_NONE
+               {                        # global
+                 DUP ; CAAR             # tez : global
+                 PUSH tez "50.00"
+                 COMPARE ; GT           # 50.00 > tez : global
+                 IF { FAIL } {}         # global
+                 DUP ; CADR             # string : global
+                 DIP { CDR }            # string : map
+                 PUSH uint32 1 ; SOME
+                 SWAP                   # string : option 1 : map
+                 UPDATE                 # map
+               }
+               {                        # uint32 : global
+                 PUSH uint32 1          # 1 : uint32 : global
+                 ADD ; SOME             # some (1 + uint32) : global
+                 DIP { DUP ; CADR }     # some (1 + uint32) : string : global
+                 DIIP { CDR }           # some (1 + uint32) : string : map
+                 SWAP; UPDATE           # map
+               }
+             UNIT ; PAIR }
+
+  

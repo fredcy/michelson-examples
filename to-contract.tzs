@@ -1,0 +1,12 @@
+storage    unit
+parameter  string
+return     unit
+code {
+       # (pair (tez beername@string) unit) 
+       CADR
+       UNIT ; SWAP
+       PUSH (contract string unit) "TZ1mf9vBY8NMPgvMNVUoZ9nJQeYuTaV8ZaGV" ; SWAP
+       PUSH tez "5.00" ; SWAP
+       TRANSFER_TOKENS
+       PAIR
+     }

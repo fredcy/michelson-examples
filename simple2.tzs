@@ -1,0 +1,6 @@
+storage uint32
+parameter uint32
+return uint32
+code { DUP ; CDR ; 
+       DIP { CAR ; CDR } ;
+       PAIR }
